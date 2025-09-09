@@ -1,0 +1,16 @@
+tests:
+  - name: Violin Recognition
+    description: Can listeners distinguish between two different violins when played by different violinists ?
+    rules:
+      X:
+      A:
+        violin: X.violin
+        player: "!X.player"
+        session: X.session
+        excerpt: X.excerpt
+      B:
+        violin: "!X.violin"
+        player: "!X.player"
+        session: X.session
+        excerpt: X.excerpt
+

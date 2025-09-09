@@ -1,0 +1,13 @@
+tests:
+  - name: Violin recognition - Same player
+    description: Can listeners distinguish different violins when played by the same player ? Is it easier than when played by different violinists
+    rules:
+      X:
+      A:
+        violin: "X.violin"
+        player: "X.player"
+        session: "X.session"
+      B:
+        violin: "!X.violin"
+        player: "X.player"
+        session: "!X.session"

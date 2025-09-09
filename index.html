@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <header>
+        <ol id="steps">
+            <li></li>
+            <li></li>
+        </ol>
+        <div id="progress"></div>
+    </header>
+    
+    <form>
+       <div class="form-step active">
+            <div id="intro">
+                <h1>Bienvuenue,</h1>
+                <p>et merci de prendre part à ce test d'écoute ! Les règles sont simples : à chaque tour vous aurez à écouter trois enregistrements. Parmi les deux enregistrements notés X et Y, un seul contient le même violon que dans la référence (notée R) : saurez-vous dire lequel ?</p>
+                <p>Appuyer sur R, X ou Y pour écouter un enregistrement. Appuyez de nouveau pour mettre en pause. Pour sélectionner votre réponse, appuyez sur X ou Y, puis passez au tour suivant en cliquant sur la flèche en bas à droite. Vous pouvez revenir en arrière à tout moment.</p>
+                <p>Bon courage !</p>
+            </div>
+       </div>
+
+       <div class="form-step">
+            <div id="conclu">
+                <button>Sauvegarder</button>
+            </div>
+       </div>
+    </form>
+
+    <footer>
+        <button id="prev">&#8249;</button>
+        <button id="next">&#8250;</button>
+    </footer>
+
+    <script src="main.js"></script>
+
+</body>
+</html>
