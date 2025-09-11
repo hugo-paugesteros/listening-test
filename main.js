@@ -131,6 +131,9 @@ const prev = document.querySelector('#prev')
 const next = document.querySelector('#next')
 
 function updatePage(page) {
+    // Pause all audios in the page
+    document.querySelectorAll('audio').forEach(audio => audio.pause())
+
     history.replaceState({}, '', `#${page}`)
 
     // Update timeline
