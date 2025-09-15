@@ -2,4 +2,4 @@ audio-old/
 venv/
 __pycache__
 .vscode
-audio/normalized-old/
+audio/normalized-old

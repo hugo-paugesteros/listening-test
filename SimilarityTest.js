@@ -151,6 +151,10 @@ class SimilarityTest extends HTMLElement {
         }
     }
 
+    getResults() {
+        return parseInt(this.shadow.querySelector('input[type=range').value)
+    }
+
     pause() {
         this.shadow.querySelectorAll('audio').forEach(audio => audio.pause())
     }

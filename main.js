@@ -101,9 +101,13 @@ document.querySelectorAll('.form-step label.audio').forEach(
 const saveBtn = document.querySelector('#conclu button')
 saveBtn.addEventListener('click', (e) => {
     e.preventDefault()
-    const formData = new FormData(form)
-    const formProps = Object.fromEntries(formData)
-    const json = JSON.stringify(formProps)
+    let results = []
+    console.log(document.querySelectorAll('similarity-test'))
+    document.querySelectorAll('similarity-test').forEach(test => {
+        results.push(test.getResults())
+    })
+    console.log(results)
+    const json = JSON.stringify(results)
     const name = "sample.json";
     const type = "text/plain";
 
