@@ -81,7 +81,7 @@ for player in ["SMD", "Clara"]:
             )
         )
 
-    for violin1, violin2 in [("A", "B"), ("B", "C"), ("C", "B")]:
+    for violin1, violin2 in [("A", "B"), ("C", "A")]:
         session = int(np.random.choice([1, 2, 3]))
         tests.append(
             (
