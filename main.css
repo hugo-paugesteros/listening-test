@@ -91,51 +91,14 @@ form {
         height: 100%;
         transition: all .5s;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
-        transform: translateX(-100%);
-
-        &.active {
-            transform: translateX(0%);
-        }
-
-        &.active~.form-step {
-            transform: translateX(100%);
-        }
-
-        & input {
-            display: none;
-        }
-
-        & label.audio {
-            --progress-value: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
+        & .label-audio {
             position: absolute;
             top: 50%;
             left: 50%;
-
-            border: 0;
-            padding: 0;
-            width: 50px;
-            margin: -25px;
-            /* line-height: 100%; */
-            aspect-ratio: 1;
-            border-radius: 50%;
-
-            /* transform: translateX(-50%) translateY(-50%); */
-
-            background:
-                radial-gradient(closest-side, white 90%, transparent 91% 100%),
-                conic-gradient(var(--color) calc(var(--progress-value) * 1%), transparent 0);
-
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-
-            transition: all .2s;
 
             &:nth-child(1) {
                 --color: gray;
@@ -151,13 +114,16 @@ form {
                 --color: blue;
                 transform: rotate(30deg) translate(var(--radius)) rotate(-30deg);
             }
+        }
 
-            &.active {
-                box-shadow: unset;
-                background:
-                    radial-gradient(closest-side, rgb(221, 221, 255) 80%, white 80%, white 90%, transparent 91% 100%),
-                    conic-gradient(var(--color) calc(var(--progress-value) * 1%), transparent 0);
-            }
+        transform: translateX(-100%);
+
+        &.active {
+            transform: translateX(0%);
+        }
+
+        &.active~.form-step {
+            transform: translateX(100%);
         }
     }
 

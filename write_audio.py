@@ -25,13 +25,15 @@ dataset = dataset[
 dataset = pd.concat([dataset, missing], ignore_index=True)
 dataset.rename(columns={"extract": "excerpt"}, inplace=True)
 
-# for i, row in dataset.iterrows():
-#     offset = row["start"]
-#     duration = row["end"] - offset
-#     audio, sr = librosa.load(str(row["file"]), offset=offset, duration=duration)
-#     scipy.io.wavfile.write(
-#         f"audio2/{row.violin}-{row.player}-{row.session}.wav", sr, audio
-#     )
+for i, row in dataset.iterrows():
+    offset = row["start"]
+    duration = row["end"] - offset
+    audio, sr = librosa.load(
+        str(row["file"]), sr=None, offset=offset, duration=duration, mono=False
+    )
+    scipy.io.wavfile.write(
+        f"audio/{row.violin}-{row.player}-{row.session}.wav", sr, audio.T
+    )
 
 patterns = (
     [1, 2, 3],
@@ -40,20 +42,20 @@ patterns = (
     [2, 3, 1],
 )
 
-tests = []
-for violin in ["A", "B", "C"]:
-    for player in ["Paul", "Clara", "SMD"]:
-        pattern = patterns[np.random.choice(4)]
-        tests.append(
-            (
-                {"player": player, "violin": violin, "session": pattern[0]},
-                {"player": player, "violin": violin, "session": pattern[1]},
-                {"player": player, "violin": violin, "session": pattern[2]},
-            )
-        )
-        ref = f"{player}:{violin}:{pattern[0]}"
-        a = f"{player}:{violin}:{pattern[1]}"
-        b = f"{player}:{violin}:{pattern[2]}"
-        print(f"{ref}\t{a}\t{b}")
-with open("test.json", "w") as f:
-    json.dump(tests, f)
+# tests = []
+# for violin in ["A", "B", "C"]:
+#     for player in ["Paul", "Clara", "SMD"]:
+#         pattern = patterns[np.random.choice(4)]
+#         tests.append(
+#             (
+#                 {"player": player, "violin": violin, "session": pattern[0]},
+#                 {"player": player, "violin": violin, "session": pattern[1]},
+#                 {"player": player, "violin": violin, "session": pattern[2]},
+#             )
+#         )
+#         ref = f"{player}:{violin}:{pattern[0]}"
+#         a = f"{player}:{violin}:{pattern[1]}"
+#         b = f"{player}:{violin}:{pattern[2]}"
+#         print(f"{ref}\t{a}\t{b}")
+# with open("test.json", "w") as f:
+#     json.dump(tests, f)

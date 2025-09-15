@@ -1,69 +1,3 @@
-function click(button) {
-    let formStep = button.parentElement
-    let audio = button.querySelector('audio')
-    let paused = audio.paused
-
-    formStep.querySelectorAll('audio').forEach(audio => audio.pause())
-
-    if (paused) {
-        audio.play()
-    } else {
-        audio.pause()
-    }
-
-    audio.addEventListener('timeupdate', (e) => {
-        let seekPosition = e.target.currentTime * (100 / e.target.duration)
-        button.style.setProperty('--progress-value', seekPosition)
-    })
-
-    if (!button.classList.contains('r')) {
-        let other = button.classList.contains('x') ? button.nextElementSibling : button.previousElementSibling
-
-        button.classList.add('active')
-        other.classList.remove('active')
-
-        formStep.querySelector('div').textContent = `${button.textContent} est selectionné`
-    }
-}
-
-// function subsets(arr, length) {
-//     const result = [];
-// 
-//     // Recursive function to generate subsets
-//     function generateSubsets(currentSubset, start) {
-//         if (currentSubset.length === length) {
-//             result.push([...currentSubset]); // Add a copy of the currentSubset to the result
-//             return;
-//         }
-// 
-//         for (let i = start; i < arr.length; i++) {
-//             currentSubset.push(arr[i]);
-//             generateSubsets(currentSubset, i + 1);
-//             currentSubset.pop();
-//         }
-//     }
-// 
-//     generateSubsets([], 0);
-//     return result;
-// }
-// 
-// let rounds = []
-// const players = ['Clara', 'SMD', 'Paul']
-// const violins = ['A', 'B', 'C']
-// 
-// subsets(players, 2).forEach((player_subset) => {
-//     subsets(violins, 2).forEach((violin_subset) => {
-//         other = players.filter(player => !player_subset.includes(player))
-//         let session = 1;
-//         round = {
-//             ref: `${violin_subset[0]}-${player_subset[0]}-tchai-${session}.wav`,
-//             a: `${violin_subset[0]}-${player_subset[1]}-tchai-${session}.wav`,
-//             b: `${violin_subset[1]}-${other}-tchai-${session}.wav`,
-//         }
-//         rounds.push(round)
-//     })
-// })
-
 let rounds = []
 
 fetch('test.json')
@@ -90,30 +24,14 @@ function render(rounds) {
         let formSection = document.createElement('div')
         formSection.classList.add('form-step')
         formSection.innerHTML = `
-        <label class="audio r">
-        R
-        <audio src="audio/normalized/${round.ref}"></audio>
-        </label>
-        <label class="audio x" for="${i + 1}-x">
-        X
-        <audio src="audio/normalized/${round.a}"></audio>
-        </label>
-        <label class="audio y" for="${i + 1}-y">
-        Y
-        <audio src="audio/normalized/${round.b}"></audio>
-        </label>
-        <div></div>
-        <input type="radio" name="${i + 1}" id="${i + 1}-x" value="${i + 1}-x">
-        <input type="radio" name="${i + 1}" id="${i + 1}-y" value="${i + 1}-y">
+        <similarity-test
+            path-x="audio/normalized/${round.a}"
+            path-y="audio/normalized/${round.b}"
+        >
+        </similarity-test>
         `
         form.insertBefore(formSection, form.children[i + 1])
     })
-
-    document.querySelectorAll('.form-step label.audio').forEach(
-        button => button.addEventListener('click', (e) => {
-            click(button)
-        })
-    )
 
     updatePage(page)
 }
@@ -132,7 +50,7 @@ const next = document.querySelector('#next')
 
 function updatePage(page) {
     // Pause all audios in the page
-    document.querySelectorAll('audio').forEach(audio => audio.pause())
+    document.querySelectorAll('similarity-test').forEach(test => test.pause())
 
     history.replaceState({}, '', `#${page}`)
 

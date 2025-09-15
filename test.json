@@ -1,1 +1,155 @@
-[[{"player": "Paul", "violin": "A", "session": 2}, {"player": "Paul", "violin": "A", "session": 1}, {"player": "Paul", "violin": "A", "session": 3}], [{"player": "Clara", "violin": "A", "session": 2}, {"player": "Clara", "violin": "A", "session": 3}, {"player": "Clara", "violin": "A", "session": 1}], [{"player": "SMD", "violin": "A", "session": 1}, {"player": "SMD", "violin": "A", "session": 3}, {"player": "SMD", "violin": "A", "session": 2}], [{"player": "Paul", "violin": "B", "session": 1}, {"player": "Paul", "violin": "B", "session": 2}, {"player": "Paul", "violin": "B", "session": 3}], [{"player": "Clara", "violin": "B", "session": 2}, {"player": "Clara", "violin": "B", "session": 1}, {"player": "Clara", "violin": "B", "session": 3}], [{"player": "SMD", "violin": "B", "session": 1}, {"player": "SMD", "violin": "B", "session": 3}, {"player": "SMD", "violin": "B", "session": 2}], [{"player": "Paul", "violin": "C", "session": 1}, {"player": "Paul", "violin": "C", "session": 2}, {"player": "Paul", "violin": "C", "session": 3}], [{"player": "Clara", "violin": "C", "session": 2}, {"player": "Clara", "violin": "C", "session": 3}, {"player": "Clara", "violin": "C", "session": 1}], [{"player": "SMD", "violin": "C", "session": 2}, {"player": "SMD", "violin": "C", "session": 3}, {"player": "SMD", "violin": "C", "session": 1}]]
+[
+    [
+        {
+            "player": "Paul",
+            "violin": "A",
+            "session": 2
+        },
+        {
+            "player": "Paul",
+            "violin": "A",
+            "session": 1
+        },
+        {
+            "player": "Paul",
+            "violin": "A",
+            "session": 3
+        }
+    ],
+    [
+        {
+            "player": "Clara",
+            "violin": "A",
+            "session": 2
+        },
+        {
+            "player": "Clara",
+            "violin": "A",
+            "session": 3
+        },
+        {
+            "player": "Clara",
+            "violin": "A",
+            "session": 1
+        }
+    ],
+    [
+        {
+            "player": "SMD",
+            "violin": "A",
+            "session": 1
+        },
+        {
+            "player": "SMD",
+            "violin": "A",
+            "session": 3
+        },
+        {
+            "player": "SMD",
+            "violin": "A",
+            "session": 2
+        }
+    ],
+    [
+        {
+            "player": "Paul",
+            "violin": "B",
+            "session": 1
+        },
+        {
+            "player": "Paul",
+            "violin": "B",
+            "session": 2
+        },
+        {
+            "player": "Paul",
+            "violin": "B",
+            "session": 3
+        }
+    ],
+    [
+        {
+            "player": "Clara",
+            "violin": "B",
+            "session": 2
+        },
+        {
+            "player": "Clara",
+            "violin": "B",
+            "session": 1
+        },
+        {
+            "player": "Clara",
+            "violin": "B",
+            "session": 3
+        }
+    ],
+    [
+        {
+            "player": "SMD",
+            "violin": "B",
+            "session": 1
+        },
+        {
+            "player": "SMD",
+            "violin": "B",
+            "session": 3
+        },
+        {
+            "player": "SMD",
+            "violin": "B",
+            "session": 2
+        }
+    ],
+    [
+        {
+            "player": "Paul",
+            "violin": "C",
+            "session": 1
+        },
+        {
+            "player": "Paul",
+            "violin": "C",
+            "session": 2
+        },
+        {
+            "player": "Paul",
+            "violin": "C",
+            "session": 3
+        }
+    ],
+    [
+        {
+            "player": "Clara",
+            "violin": "C",
+            "session": 2
+        },
+        {
+            "player": "Clara",
+            "violin": "C",
+            "session": 3
+        },
+        {
+            "player": "Clara",
+            "violin": "C",
+            "session": 1
+        }
+    ],
+    [
+        {
+            "player": "SMD",
+            "violin": "C",
+            "session": 2
+        },
+        {
+            "player": "SMD",
+            "violin": "C",
+            "session": 3
+        },
+        {
+            "player": "SMD",
+            "violin": "C",
+            "session": 1
+        }
+    ]
+]
