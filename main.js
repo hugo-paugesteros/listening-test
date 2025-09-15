@@ -1,15 +1,15 @@
 let rounds = []
 
-fetch('test.json')
+fetch('test2.json')
     .then((response) => response.json())
     .then((json) => render(loadTest(json)));
 
 function loadTest(json) {
     json.forEach(round => {
         rounds.push({
-            ref: `${round[0].violin}-${round[0].player}-${round[0].session}.wav`,
-            a: `${round[1].violin}-${round[1].player}-${round[1].session}.wav`,
-            b: `${round[2].violin}-${round[2].player}-${round[2].session}.wav`,
+            // ref: `${round[0].violin}-${round[0].player}-${round[0].session}.wav`,
+            a: `${round[0].violin}-${round[0].player}-${round[0].session}.wav`,
+            b: `${round[1].violin}-${round[1].player}-${round[1].session}.wav`,
         })
     })
     return rounds

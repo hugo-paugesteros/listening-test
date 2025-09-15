@@ -25,15 +25,15 @@ dataset = dataset[
 dataset = pd.concat([dataset, missing], ignore_index=True)
 dataset.rename(columns={"extract": "excerpt"}, inplace=True)
 
-for i, row in dataset.iterrows():
-    offset = row["start"]
-    duration = row["end"] - offset
-    audio, sr = librosa.load(
-        str(row["file"]), sr=None, offset=offset, duration=duration, mono=False
-    )
-    scipy.io.wavfile.write(
-        f"audio/{row.violin}-{row.player}-{row.session}.wav", sr, audio.T
-    )
+# for i, row in dataset.iterrows():
+#     offset = row["start"]
+#     duration = row["end"] - offset
+#     audio, sr = librosa.load(
+#         str(row["file"]), sr=None, offset=offset, duration=duration, mono=False
+#     )
+#     scipy.io.wavfile.write(
+#         f"audio/{row.violin}-{row.player}-{row.session}.wav", sr, audio.T
+#     )
 
 patterns = (
     [1, 2, 3],
@@ -59,3 +59,50 @@ patterns = (
 #         print(f"{ref}\t{a}\t{b}")
 # with open("test.json", "w") as f:
 #     json.dump(tests, f)
+
+
+tests = []
+for player in ["SMD", "Clara"]:
+    for violin in ["A", "B", "C"]:
+        tests.append(
+            (
+                {"player": player, "violin": violin, "session": 1},
+                {"player": player, "violin": violin, "session": 2},
+            )
+        )
+        tests.append(
+            (
+                {
+                    "player": player,
+                    "violin": violin,
+                    "session": int(np.random.choice([1, 2])),
+                },
+                {"player": player, "violin": violin, "session": 3},
+            )
+        )
+
+    for violin1, violin2 in [("A", "B"), ("B", "C"), ("C", "B")]:
+        session = int(np.random.choice([1, 2, 3]))
+        tests.append(
+            (
+                {"player": player, "violin": violin1, "session": session},
+                {"player": player, "violin": violin2, "session": session},
+            )
+        )
+
+    tests.append(
+        (
+            {"player": player, "violin": "A", "session": 1},
+            {"player": player, "violin": "A", "session": 1},
+        )
+    )
+
+tests.append(
+    (
+        {"player": "Clara", "violin": "A", "session": 1},
+        {"player": "SMD", "violin": "A", "session": 1},
+    )
+)
+
+with open("test2.json", "w") as f:
+    json.dump(tests, f)

@@ -24,11 +24,12 @@ class SimilarityTest extends HTMLElement {
             <input type="radio" name="${id}" id="${id}-y" value="${id}-y">
         </div>
         <div></div>
+        <p>Les violons X et Y sont :</p>
         <input type="range" name="" id="" min="0" max="10" value="5" list="values" onkeydown="event.preventDefault()">
 
         <datalist id="values">
-            <option value="0" label="Similaires"></option>
-            <option value="10" label="Différents"></option>
+            <option value="0" label="Très similaires"></option>
+            <option value="10" label="Très différents"></option>
         </datalist>
 
         <style>
@@ -43,7 +44,7 @@ class SimilarityTest extends HTMLElement {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
-                    width: 200px;
+                    width: 450px;
                 }
 
                 option {
@@ -51,7 +52,7 @@ class SimilarityTest extends HTMLElement {
                 }
 
                 input[type="range"] {
-                    width: 200px;
+                    width: 400px;
                     margin: 0;
                 }
 
