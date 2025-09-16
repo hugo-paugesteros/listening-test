@@ -15,6 +15,7 @@
         <ol id="steps">
             <li></li>
             <li></li>
+            <li></li>
         </ol>
         <div id="progress"></div>
     </header>
@@ -23,14 +24,36 @@
         <div class="form-step active">
             <div id="intro">
                 <h1>Bienvuenue,</h1>
-                <p>et merci de prendre part à ce test d'écoute ! Les règles sont simples : à chaque tour vous aurez à
-                    écouter trois enregistrements. Parmi les deux enregistrements notés X et Y, un seul contient le même
-                    violon que dans la référence (notée R) : saurez-vous dire lequel ?</p>
-                <p>Appuyer sur R, X ou Y pour écouter un enregistrement. Appuyez de nouveau pour mettre en pause. Pour
-                    sélectionner votre réponse, appuyez sur X ou Y, puis passez au tour suivant en cliquant sur la
+                <p>et merci de prendre part à ce test d'écoute !</p>
+                <p>Les règles sont simples : à chaque tour vous aurez à
+                    écouter deux enregistrements contenant des violons. Vous devrez ensuite juger de la similarité entre
+                    les deux violons joués, sur une échelle allant de "très similaires" à "très différents".</p>
+                <p>Appuyez sur X ou Y pour écouter un enregistrement. Appuyez de nouveau pour mettre en pause. Utilisez
+                    le slider pour noter la similarité des violons, puis passez au tour suivant en cliquant sur la
                     flèche en bas à droite. Vous pouvez revenir en arrière à tout moment.</p>
                 <p>Bon courage !</p>
             </div>
+        </div>
+
+        <div class="form-step">
+            <div id="intro">
+                <h2>Familiarisation :</h2>
+                <p>Voici trois examples de tests que vous aurez à faire. Pour chaque test, écoutez l'extrait X et
+                    l'extrait Y et notez (dans votre tête pour le moment) si les violons sont similaires ou différents.
+                </p>
+
+            </div>
+            <similarity-test class="tutorial" path-x="audio/normalized/A-Clara-1.wav"
+                path-y="audio/normalized/C-Clara-1.wav">
+            </similarity-test>
+            <hr>
+            <similarity-test class="tutorial" path-x="audio/normalized/A-SMD-1.wav"
+                path-y="audio/normalized/C-SMD-1.wav">
+            </similarity-test>
+            <hr>
+            <similarity-test class="tutorial" path-x="audio/normalized/A-Clara-1.wav"
+                path-y="audio/normalized/A-SMD-2.wav">
+            </similarity-test>
         </div>
 
         <div class="form-step">

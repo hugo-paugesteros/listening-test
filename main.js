@@ -19,7 +19,7 @@ function render(rounds) {
     rounds.forEach((round, i) => {
         // Create timeline
         let step = document.createElement('li')
-        steps.insertBefore(step, steps.children[i + 1])
+        steps.insertBefore(step, steps.lastElementChild)
 
         let formSection = document.createElement('div')
         formSection.classList.add('form-step')
@@ -30,7 +30,8 @@ function render(rounds) {
         >
         </similarity-test>
         `
-        form.insertBefore(formSection, form.children[i + 1])
+        form.insertBefore(formSection, form.lastElementChild)
+
     })
 
     updatePage(page)
@@ -59,7 +60,7 @@ function updatePage(page) {
 
     // Update prev/next buttons
     prev.setAttribute('data-disabled', page == 1)
-    next.setAttribute('data-disabled', page == rounds.length + 2)
+    next.setAttribute('data-disabled', page == form.childElementCount)
 
     for (child of steps.children) { child.classList.remove('active') }
     steps.children[page - 1].classList.add('active')
@@ -69,7 +70,7 @@ function updatePage(page) {
 }
 
 next.addEventListener('click', () => {
-    page = page < rounds.length + 2 ? page + 1 : page
+    page = page < form.childElementCount ? page + 1 : page
     updatePage(page)
 })
 
@@ -87,7 +88,7 @@ document.addEventListener('keydown', (event) => {
 
     if (event.key == 'ArrowRight') {
         let previous = page
-        page = page < rounds.length + 2 ? page + 1 : page
+        page = page < form.childElementCount ? page + 1 : page
         updatePage(page)
     }
 })

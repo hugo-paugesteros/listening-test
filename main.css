@@ -95,6 +95,10 @@ form {
         justify-content: center;
         align-items: center;
 
+        hr {
+            width: 50%;
+        }
+
         & .label-audio {
             position: absolute;
             top: 50%;

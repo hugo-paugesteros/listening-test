@@ -29,13 +29,20 @@ class SimilarityTest extends HTMLElement {
 
         <datalist id="values">
             <option value="0" label="Très similaires"></option>
+            <option value="5" label=""></option>
             <option value="10" label="Très différents"></option>
         </datalist>
 
         <style>
+            :host(.tutorial) {
+                datalist, option, input[type="range"], p {
+                    display: none;
+                }
+            }
             :host {
+                margin: 1em 0 !important;
                 display: block;
-                 display: flex;
+                display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -44,7 +51,7 @@ class SimilarityTest extends HTMLElement {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
-                    width: 450px;
+                    width: 350px;
                 }
 
                 option {
@@ -52,7 +59,7 @@ class SimilarityTest extends HTMLElement {
                 }
 
                 input[type="range"] {
-                    width: 400px;
+                    width: 300px;
                     margin: 0;
                 }
 
@@ -117,13 +124,13 @@ class SimilarityTest extends HTMLElement {
     }
 
     click(button) {
-        let formStep = button.parentElement
         let audio = button.querySelector('audio')
         let paused = audio.paused
 
-        formStep.querySelectorAll('audio').forEach(audio => audio.pause())
+        document.querySelectorAll('similarity-test').forEach(audio => audio.pause())
 
         if (paused) {
+            audio.currentTime = 0
             audio.play()
         } else {
             audio.pause()
