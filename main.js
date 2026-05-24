@@ -23,12 +23,18 @@ function loadTest(configRounds) {
         const x = Array.isArray(round.x)
             ? round.x[Math.floor(Math.random() * round.x.length)]
             : round.x;
+            
+        // ABXY
+            const y = Array.isArray(round.y)
+            ? round.y[Math.floor(Math.random() * round.y.length)]
+            : round.y;
 
         rounds.push({
             id: i,
             a: round.a,
             b: round.b,
             x: x,
+            y: y,
             type: round.type // Optional override for mixed tests
         })
     })
@@ -57,6 +63,17 @@ function render(rounds) {
             >
             </abx-test>
             `
+        } else if (currentType === 'abxy') {
+            // CORRECTION ICI : Remplacement de testHTML par formSection.innerHTML
+            formSection.innerHTML = `
+            <abxy-test
+                path-a="${CONFIG.test.audioRoot}${round.a}"
+                path-b="${CONFIG.test.audioRoot}${round.b}"
+                path-x="${CONFIG.test.audioRoot}${round.x}"
+                path-y="${CONFIG.test.audioRoot}${round.y}"
+                instruction="${CONFIG.test.abxy.instruction}"
+            >
+            </abxy-test>`;
         } else {
             formSection.innerHTML = `
             <similarity-test
@@ -81,10 +98,16 @@ function render(rounds) {
 function validateCurrentStep() {
     const currentStepEl = form.children[page - 1];
     const abxComponent = currentStepEl.querySelector('abx-test');
+    const abxyComponent = currentStepEl.querySelector('abxy-test');
 
     // Only validate if it's an ABX test and validation is enabled
     if (abxComponent && CONFIG.test.validate) {
         const hasAnswer = abxComponent.getResults() !== null;
+        next.setAttribute('data-disabled', !hasAnswer);
+    } 
+    // Validation ABXY
+    else if (abxyComponent && CONFIG.test.validate) {
+        const hasAnswer = abxyComponent.getResults() !== null;
         next.setAttribute('data-disabled', !hasAnswer);
     } else {
         next.setAttribute('data-disabled', page == form.childElementCount);
@@ -96,6 +119,8 @@ function updatePage(page) {
     document.querySelectorAll('audio-player').forEach(p => p.stop());
     document.querySelectorAll('similarity-test').forEach(test => test.pause());
     document.querySelectorAll('abx-test').forEach(test => test.pause());
+    // ABXY
+    document.querySelectorAll('abxy-test').forEach(test => test.pause());
 
     history.replaceState({}, '', `#${page}`)
 
@@ -141,7 +166,6 @@ function initUI() {
     document.getElementById('save-btn').innerText = CONFIG.conclusion.buttonText;
     document.getElementById('conclu-text').innerText = CONFIG.conclusion.instruction;
 }
-
 // Global audio management: pause others when one starts
 window.addEventListener('audio-play', (e) => {
     const activePlayer = e.detail.player;
@@ -150,13 +174,15 @@ window.addEventListener('audio-play', (e) => {
     document.querySelectorAll('audio-player').forEach(p => {
         if (p !== activePlayer) p.stop();
     });
-
+    
     // Also stop players inside similarity-test and abx-test components
     document.querySelectorAll('similarity-test').forEach(test => {
         if (test.playerX !== activePlayer) test.playerX.stop();
         if (test.playerY !== activePlayer) test.playerY.stop();
     });
-    document.querySelectorAll('abx-test').forEach(test => {
+    
+    // ABX AND ABXY
+    document.querySelectorAll('abx-test, abxy-test').forEach(test => {
         test.shadowRoot.querySelectorAll('audio-player').forEach(p => {
             if (p !== activePlayer) p.stop();
         });
@@ -233,7 +259,6 @@ async function submitTestResults(testData) {
         }
     } catch (error) {
         console.error("Submission failed, falling back to manual download.", error);
-        // Fallback to manual JSON download
         downloadJSON(testData);
     }
 }
@@ -260,11 +285,10 @@ saveBtn.addEventListener('click', (e) => {
     let results = []
     const stepElements = form.querySelectorAll('.form-step');
 
-    // We only iterate through the rounds, skipping intro and conclusion
     rounds.forEach((round, i) => {
         const stepEl = stepElements[i + 2]; // Skip intro and familiarization
         const currentType = round.type || CONFIG.testType;
-        const selector = currentType === 'abx' ? 'abx-test' : 'similarity-test';
+        const selector = currentType === 'abx' ? 'abx-test' : 'abxy' ? 'abxy-test' : 'similarity-test';
         const testComponent = stepEl.querySelector(selector);
 
         results.push({
