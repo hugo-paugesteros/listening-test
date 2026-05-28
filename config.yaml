@@ -1,84 +1,76 @@
-title: "Listening test: differences between violins"
-testType: "similarity" # options: "similarity", "abx"
+title: "ABXY Strings Comparison"
+testType: "abxy"
 intro:
-  title: "Thank you for taking part in this listening test!"
+  title: "ABXY Test"
   text:
-    - "The rules are simple: in each round you will have to listen to two violin recordings."
-    - "You will have to judge the <b>difference</b> between the two violins being played, <b>regardless</b> of the musical interpretation."
-    - "You will use a ten-value scale ranging from 'not at all different' (very similar, in other words) to 'very different'."
-    - "Press X or Y to listen to a recording. Press again to pause. Use the slider to rate the difference between the violins, then move on to the next round by clicking on the arrow at the bottom right."
-    - "Good luck!"
+    - "In each round, you will hear the same two reference recordings <b>A</b> and <b>B</b>."
+    - "You will then hear two recordings <b>X</b> <b>Y</b>."
+    - "Your task is to identify which set of strings was used for <b>X</b> (A or B) and which for <b>Y</b> (A or B)."
 familiarization:
-  title: "Familiarization:"
-  text: "Here are six excerpts that are representative of the variability you will hear during this test. Compare the difference of the violins played in these six excerpts in order to create your own rating scale."
+  title: "Warm-up"
+  text: "Get used to set A and set B. They are going to be the same for all the tests ! "
   audios:
-    - label: "1"
-      src: "audio/faded/A-Norimi-1.wav"
-    - label: "2"
-      src: "audio/faded/A-Norimi-3.wav"
-    - label: "3"
-      src: "audio/faded/A-Norimi-2.wav"
-    - label: "4"
-      src: "audio/faded/A-SMD-1.wav"
-    - label: "5"
-      src: "audio/faded/A-SMD-3.wav"
-    - label: "6"
-      src: "audio/faded/C-SMD-3.wav"
+    - label: "Set A"
+      src: "audioABXY/cut/A.wav"
+    - label: "Set B"
+      src: "audioABXY/cut/B.wav"
 test:
-  audioRoot: "audio/faded/"
-  validate: true # If true, users must provide an answer before moving to the next round (ABX only)
-  similarity:
-    scale:
-      min: 0
-      max: 10
-      default: 5
-      labels:
-        min: "Not at all different"
-        max: "Very different"
-    instruction: "Violins X and Y are :"
+  audioRoot: "audioABXY/cut/"
+  validate: true
+  abxy:
+    instruction: "Which sets are used on X and Y ?"
   rounds:
-    - a: "A-SMD-1.wav"
-      b: "A-SMD-2.wav"
-    - a: "A-SMD-1.wav"
-      b: "A-SMD-3.wav"
-    - a: "B-SMD-1.wav"
-      b: "B-SMD-2.wav"
-    - a: "B-SMD-1.wav"
-      b: "B-SMD-3.wav"
-    - a: "C-SMD-1.wav"
-      b: "C-SMD-2.wav"
-    - a: "C-SMD-1.wav"
-      b: "C-SMD-3.wav"
-    - a: "A-SMD-3.wav"
-      b: "B-SMD-3.wav"
-    - a: "C-SMD-1.wav"
-      b: "A-SMD-1.wav"
-    - a: "A-SMD-1.wav"
-      b: "A-SMD-1na.wav"
-    - a: "A-SMD-2.wav"
-      b: "A-SMD-2.wav"
-    - a: "A-Norimi-1.wav"
-      b: "A-Norimi-2.wav"
-    - a: "A-Norimi-1.wav"
-      b: "A-Norimi-3.wav"
-    - a: "B-Norimi-1.wav"
-      b: "B-Norimi-2.wav"
-    - a: "B-Norimi-2.wav"
-      b: "B-Norimi-3.wav"
-    - a: "C-Norimi-1.wav"
-      b: "C-Norimi-2.wav"
-    - a: "C-Norimi-2.wav"
-      b: "C-Norimi-3.wav"
-    - a: "A-Norimi-1.wav"
-      b: "B-Norimi-1.wav"
-    - a: "C-Norimi-1.wav"
-      b: "A-Norimi-1.wav"
-    - a: "A-Norimi-2.wav"
-      b: "A-Norimi-2na.wav"
-    - a: "A-SMD-1.wav"
-      b: "A-Norimi-1.wav"
+  ## different take 1
+     - title: "Different Take 1"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E1T2.wav" ## A
+       y: "V1S2M1E1T2.wav" ## B
+   ## different take 2
+     - title: "Different Take 2"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E1T3.wav" ## A
+       y: "V1S2M1E1T3.wav" ## B
+  ## different microphone 1
+     - title: "Different Microphone 1"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V1S2M2E1T1.wav" ## B
+       y: "V1S1M2E1T1.wav" ## A
+  ## different microphone 1
+     - title: "Different Microphone 2"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V1S2M3E1T1.wav" ## B
+       y: "V1S1M3E1T1.wav" ## A
+  ## different excerpt later
+     - title: "Different Excerpt Later"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E2T1.wav" ## A
+       y: "V1S2M1E2T1.wav" ## B
+  ## different instrument 1
+     - title: "Different Instrument 1"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V2S1M1E1T1.wav" ## A
+       y: "V2S2M1E1T1.wav" ## B
+  ## different instrument 2
+     - title: "Different Instrument 2"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V3S2M1E1T1.wav" ## B
+       y: "V3S1M1E1T1.wav" ## A
+  ## different instrument 3
+     - title: "Different Instrument 3"
+       a: "A.wav"
+       b: "B.wav"
+       x: "V4S1M1E1T1.wav" ## A
+       y: "V4S2M1E1T1.wav" ## B
+
 conclusion:
-  buttonText: "Save"
-  instruction: "Click on the Save button, then OK, then write your name as the filename and save the JSON file :)"
-webhookUrl: "https://hook.eu1.make.com/hkrqujlezwj8aivwx672a8y39td58byj"
+  buttonText: "Save Results"
+  instruction: "Thank you! Please save your results."
+webhookUrl: "https://hook.eu1.make.com/nis72k45hwm88gt1721hc698w36nsfaa"
 contactEmail: "hugo.pauget@dalembert.upmc.fr"

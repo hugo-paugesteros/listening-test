@@ -1,20 +1,24 @@
 let CONFIG;
+let rounds = [];
+const steps = document.querySelector('#steps');
+const progress = document.querySelector('#progress');
+const form = document.querySelector('form');
+const prev = document.querySelector('#prev');
+const next = document.querySelector('#next');
+const saveBtn = document.querySelector('#save-btn');
 
+// Gardée au cas où, mais non appelée pour respecter l'ordre du YAML
 function shuffle(array) {
     let currentIndex = array.length;
-
     while (currentIndex != 0) {
         let randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         if (Math.random() > 0.5) {
-            [array[currentIndex].a, array[currentIndex].b] = [array[currentIndex].b, array[currentIndex].a]
+            [array[currentIndex].a, array[currentIndex].b] = [array[currentIndex].b, array[currentIndex].a];
         }
     }
-    return array
+    return array;
 }
 
 function loadTest(configRounds) {
@@ -25,36 +29,40 @@ function loadTest(configRounds) {
             : round.x;
             
         // ABXY
-            const y = Array.isArray(round.y)
+        const y = Array.isArray(round.y)
             ? round.y[Math.floor(Math.random() * round.y.length)]
             : round.y;
 
         rounds.push({
             id: i,
+            title: round.title || `Round ${i + 1}`, // Ajout du titre (fallback si absent du YAML)
             a: round.a,
             b: round.b,
             x: x,
             y: y,
             type: round.type // Optional override for mixed tests
-        })
-    })
+        });
+    });
 
-    shuffle(rounds)
-    return rounds
+    // shuffle(rounds) <--- LIGNE DÉSACTIVÉE pour garder l'ordre d'écriture du YAML
+    return rounds;
 }
 
 function render(rounds) {
     rounds.forEach((round, i) => {
-        let step = document.createElement('li')
-        steps.insertBefore(step, steps.lastElementChild)
+        let step = document.createElement('li');
+        steps.insertBefore(step, steps.lastElementChild);
 
-        let formSection = document.createElement('div')
-        formSection.classList.add('form-step')
+        let formSection = document.createElement('div');
+        formSection.classList.add('form-step');
 
         const currentType = round.type || CONFIG.testType;
+        
+        // Structure HTML du titre pour chaque round
+        const titleHTML = `<h3 class="round-title" style="text-align: center; margin-bottom: 20px;">${round.title}</h3>`;
 
         if (currentType === 'abx') {
-            formSection.innerHTML = `
+            formSection.innerHTML = titleHTML + `
             <abx-test
                 path-a="${CONFIG.test.audioRoot}${round.a}"
                 path-b="${CONFIG.test.audioRoot}${round.b}"
@@ -62,10 +70,9 @@ function render(rounds) {
                 instruction="${CONFIG.test.abx.instruction}"
             >
             </abx-test>
-            `
+            `;
         } else if (currentType === 'abxy') {
-            // CORRECTION ICI : Remplacement de testHTML par formSection.innerHTML
-            formSection.innerHTML = `
+            formSection.innerHTML = titleHTML + `
             <abxy-test
                 path-a="${CONFIG.test.audioRoot}${round.a}"
                 path-b="${CONFIG.test.audioRoot}${round.b}"
@@ -75,7 +82,7 @@ function render(rounds) {
             >
             </abxy-test>`;
         } else {
-            formSection.innerHTML = `
+            formSection.innerHTML = titleHTML + `
             <similarity-test
                 path-x="${CONFIG.test.audioRoot}${round.a}"
                 path-y="${CONFIG.test.audioRoot}${round.b}"
@@ -87,12 +94,12 @@ function render(rounds) {
                 instruction="${CONFIG.test.similarity.instruction}"
             >
             </similarity-test>
-            `
+            `;
         }
-        form.insertBefore(formSection, form.lastElementChild)
-    })
+        form.insertBefore(formSection, form.lastElementChild);
+    });
 
-    updatePage(page)
+    updatePage(page);
 }
 
 function validateCurrentStep() {
@@ -100,12 +107,10 @@ function validateCurrentStep() {
     const abxComponent = currentStepEl.querySelector('abx-test');
     const abxyComponent = currentStepEl.querySelector('abxy-test');
 
-    // Only validate if it's an ABX test and validation is enabled
     if (abxComponent && CONFIG.test.validate) {
         const hasAnswer = abxComponent.getResults() !== null;
         next.setAttribute('data-disabled', !hasAnswer);
     } 
-    // Validation ABXY
     else if (abxyComponent && CONFIG.test.validate) {
         const hasAnswer = abxyComponent.getResults() !== null;
         next.setAttribute('data-disabled', !hasAnswer);
@@ -119,28 +124,27 @@ function updatePage(page) {
     document.querySelectorAll('audio-player').forEach(p => p.stop());
     document.querySelectorAll('similarity-test').forEach(test => test.pause());
     document.querySelectorAll('abx-test').forEach(test => test.pause());
-    // ABXY
     document.querySelectorAll('abxy-test').forEach(test => test.pause());
 
-    history.replaceState({}, '', `#${page}`)
+    history.replaceState({}, '', `#${page}`);
 
-    progress.style.setProperty('--progress', (page - 1) / (steps.childElementCount - 1))
+    progress.style.setProperty('--progress', (page - 1) / (steps.childElementCount - 1));
 
-    prev.setAttribute('data-disabled', page == 1)
+    prev.setAttribute('data-disabled', page == 1);
 
     if (page > 1 && page < steps.childElementCount) {
         validateCurrentStep();
     } else {
-        next.setAttribute('data-disabled', page == form.childElementCount)
+        next.setAttribute('data-disabled', page == form.childElementCount);
     }
 
-    for (let child of steps.children) { child.classList.remove('active') } steps.children[page - 1].classList.add('active')
+    for (let child of steps.children) { child.classList.remove('active'); } 
+    steps.children[page - 1].classList.add('active');
 
-    for (let child of form.children) { child.classList.remove('active') }
-    form.children[page - 1].classList.add('active')
+    for (let child of form.children) { child.classList.remove('active'); }
+    form.children[page - 1].classList.add('active');
 }
 
-// Initial UI Population
 function initUI() {
     document.getElementById('main-title').innerText = CONFIG.title;
     document.getElementById('intro-title').innerText = CONFIG.intro.title;
@@ -166,22 +170,20 @@ function initUI() {
     document.getElementById('save-btn').innerText = CONFIG.conclusion.buttonText;
     document.getElementById('conclu-text').innerText = CONFIG.conclusion.instruction;
 }
+
 // Global audio management: pause others when one starts
 window.addEventListener('audio-play', (e) => {
     const activePlayer = e.detail.player;
 
-    // Stop all other audio players in the document (including inside shadow DOMs)
     document.querySelectorAll('audio-player').forEach(p => {
         if (p !== activePlayer) p.stop();
     });
     
-    // Also stop players inside similarity-test and abx-test components
     document.querySelectorAll('similarity-test').forEach(test => {
         if (test.playerX !== activePlayer) test.playerX.stop();
         if (test.playerY !== activePlayer) test.playerY.stop();
     });
     
-    // ABX AND ABXY
     document.querySelectorAll('abx-test, abxy-test').forEach(test => {
         test.shadowRoot.querySelectorAll('audio-player').forEach(p => {
             if (p !== activePlayer) p.stop();
@@ -193,14 +195,6 @@ document.addEventListener('answer-selected', () => {
     validateCurrentStep();
 });
 
-let rounds = []
-const steps = document.querySelector('#steps')
-const progress = document.querySelector('#progress')
-const form = document.querySelector('form')
-const prev = document.querySelector('#prev')
-const next = document.querySelector('#next')
-const saveBtn = document.querySelector('#save-btn')
-
 async function start() {
     try {
         const response = await fetch('config.yaml');
@@ -209,7 +203,7 @@ async function start() {
 
         initUI();
         render(loadTest(CONFIG.test.rounds));
-        console.log(rounds)
+        console.log(rounds);
     } catch (error) {
         console.error("Failed to initialize the test:", error);
         alert("Error: Could not load configuration. Please check the console for details.");
@@ -218,31 +212,30 @@ async function start() {
 
 start();
 
-let page = window.location.hash ? parseInt(location.hash.substring(1)) : 1
+let page = window.location.hash ? parseInt(location.hash.substring(1)) : 1;
 
 next.addEventListener('click', () => {
     if (next.getAttribute('data-disabled') === 'true') return;
-    page = page < form.childElementCount ? page + 1 : page
-    updatePage(page)
-})
+    page = page < form.childElementCount ? page + 1 : page;
+    updatePage(page);
+});
 
 prev.addEventListener('click', () => {
-    page = page > 1 ? page - 1 : page
-    updatePage(page)
-})
+    page = page > 1 ? page - 1 : page;
+    updatePage(page);
+});
 
 document.addEventListener('keydown', (event) => {
     if (event.key == 'ArrowLeft') {
-        page = page > 1 ? page - 1 : page
-        updatePage(page)
+        page = page > 1 ? page - 1 : page;
+        updatePage(page);
     }
-
     if (event.key == 'ArrowRight') {
         if (next.getAttribute('data-disabled') === 'true') return;
-        page = page < form.childElementCount ? page + 1 : page
-        updatePage(page)
+        page = page < form.childElementCount ? page + 1 : page;
+        updatePage(page);
     }
-})
+});
 
 async function submitTestResults(testData) {
     try {
@@ -251,7 +244,6 @@ async function submitTestResults(testData) {
             headers: { 'Content-Type': 'text/plain' },
             body: testData
         });
-
         if (response.ok) {
             alert("Thank you! Your evaluation has been securely submitted.");
         } else {
@@ -264,39 +256,47 @@ async function submitTestResults(testData) {
 }
 
 function downloadJSON(testData) {
-    let filename = prompt("Please enter your name or ID for the file:", "results")
+    let filename = prompt("Please enter your name or ID for the file:", "results");
     if (!filename) filename = "results";
-    if (!filename.endsWith('.json')) filename += '.json'
+    if (!filename.endsWith('.json')) filename += '.json';
 
-    const type = "application/json"
-    const a = document.createElement("a")
-    const file = new Blob([testData], { type: type })
-    a.href = URL.createObjectURL(file)
-    a.download = filename
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
+    const type = "application/json";
+    const a = document.createElement("a");
+    const file = new Blob([testData], { type: type });
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     alert(`Results saved as ${filename}. If submission failed, please send it manually to ${CONFIG.contactEmail}`);
 }
 
+// CORRECTION BULLETPROOF CONTRE LES RÉSULTATS NULL
 saveBtn.addEventListener('click', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let results = []
-    const stepElements = form.querySelectorAll('.form-step');
+    let results = [];
+    
+    // Filtre pour ne cibler que les conteneurs qui embarquent un vrai composant de test
+    const allSteps = Array.from(form.querySelectorAll('.form-step'));
+    const testSteps = allSteps.filter(step => step.querySelector('abx-test, abxy-test, similarity-test'));
 
     rounds.forEach((round, i) => {
-        const stepEl = stepElements[i + 2]; // Skip intro and familiarization
-        const currentType = round.type || CONFIG.testType;
-        const selector = currentType === 'abx' ? 'abx-test' : 'abxy' ? 'abxy-test' : 'similarity-test';
-        const testComponent = stepEl.querySelector(selector);
+        const stepEl = testSteps[i]; 
+        
+        if (stepEl) {
+            const testComponent = stepEl.querySelector('abx-test, abxy-test, similarity-test');
+            results.push({
+                test: round,
+                result: testComponent ? testComponent.getResults() : null
+            });
+        } else {
+            console.warn(`Impossible de cibler le conteneur du round HTML à l'index : ${i}`);
+            results.push({ test: round, result: null });
+        }
+    });
 
-        results.push({
-            test: round,
-            result: testComponent ? testComponent.getResults() : null
-        })
-    })
-    console.log(results)
-    const json = JSON.stringify(results, null, 2)
-    submitTestResults(json)
-})
+    console.log("Données collectées prêtes :", results);
+    const json = JSON.stringify(results, null, 2);
+    submitTestResults(json);
+});

@@ -1,42 +1,66 @@
-title: "ABXY Violin Comparison"
+title: "ABXY Strings Comparison"
 testType: "abxy"
 intro:
   title: "ABXY Test"
   text:
-    - "In each round, you will hear two reference recordings <b>A</b> and <b>B</b>."
+    - "In each round, you will hear the same two reference recordings <b>A</b> and <b>B</b>."
     - "You will then hear two recordings <b>X</b> <b>Y</b>."
-    - "Your task is to identify which violin was used for <b>X</b> (A or B) and which for <b>Y</b> (A or B)."
+    - "Your task is to identify which set of strings was used for <b>X</b> (A or B) and which for <b>Y</b> (A or B)."
 familiarization:
   title: "Warm-up"
-  text: "Listen to these examples to get used to the violins."
+  text: "Get used to set A and set B. They are going to be the same for all the tests ! "
   audios:
-    - label: "Exemple 1"
-      src: "audioThuyAn/PZM 1 - 0924 - Vl1-Dynamo-Partita_Pos1.wav"
-    - label: "Exemple 2"
-      src: "audioThuyAn/PZM 1 - 0943 - Vl1-TI-Partita_Pos1.wav"
-    - label: "Exemple 3"
-      src: "audioThuyAn/PZM 1 - 1000 - Vl1-VTO-Partita_Pos1.wav"
+    - label: "Set A"
+      src: "audioABXY/cut/A.wav"
+    - label: "Set B"
+      src: "audioABXY/cut/B.wav"
 test:
-  audioRoot: "audioThuyAn/"
+  audioRoot: "audioABXY/cut/"
   validate: true
   abxy:
-    instruction: "Which violin is X? Which violin is Y?"
+    instruction: "Which sets are used on X and Y ?"
   rounds:
-   ## different take
-    - a: "PZM 1 - 0924 - Vl1-Dynamo-Partita_Pos1.wav"
-      b: "PZM 1 - 0943 - Vl1-TI-Partita_Pos1.wav"
-      x: ["PZM 1 - 0932 - Vl1-Dynamo-Partita_Pos1.wav", "PZM 1 - 0925 - Vl1-Dynamo-Partita_Pos1.wav"]
-      y: ["PZM 1 - 0944 - Vl1-TI-Partita_Pos1.wav", "PZM 1 - 0949 - Vl1-TI-Partita_Pos1.wav"]
-  ## different microphone
-    - a: "PZM 1 - 0924 - Vl1-Dynamo-Partita_Pos1.wav"
-      b: "PZM 1 - 1000 - Vl1-VTO-Partita_Pos1.wav"
-      x: ["PZM 4 - 0924 - Vl1-Dynamo-Partita_Pos1.wav", "SE8 R - 0924 - Vl1-Dynamo-Partita_Pos1.wav"]
-      y: ["PZM 3 - 1000 - Vl1-VTO-Partita_Pos1.wav", "SE8 L - 1000 - Vl1-VTO-Partita_Pos1.wav"]
-  ## different excerpt
-    - a: "PZM 1 - 0943 - Vl1-TI-Partita_Pos1.wav"
-      b: "PZM 1 - 0924 - Vl1-Dynamo-Partita_Pos1.wav"
-      x: "PZM 1 - 0940 - Vl1-TI-Tonleiter_Pos1.wav"
-      y: "PZM 1 - 0918 - Vl1-Dynamo-Tonleiter_Pos1.wav"
+  ## different take 1
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E1T2.wav" ## A
+       y: "V1S2M1E1T2.wav" ## B
+   ## different take 2
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E2T3.wav" ## A
+       y: "V1S2M1E2T3.wav" ## B
+  ## different microphone 1
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V1S2M2E1T1.wav" ## B
+       y: "V1S1M2E1T1.wav" ## A
+  ## different microphone 1
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V1S2M3E1T1.wav" ## B
+       y: "V1S1M3E1T1.wav" ## A
+  ## different excerpt later
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V1S1M1E2T1.wav" ## A
+       y: "V1S2M1E2T1.wav" ## B
+  ## different instrument 1
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V2S1M1E1T1.wav" ## A
+       y: "V2S2M1E1T1.wav" ## B
+  ## different instrument 2
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V3S2M1E1T1.wav" ## B
+       y: "V3S1M1E1T1.wav" ## A
+  ## different instrument 3
+     - a: "A.wav"
+       b: "B.wav"
+       x: "V4S1M1E1T1.wav" ## A
+       y: "V4S2M1E1T1.wav" ## B
+
 conclusion:
   buttonText: "Save Results"
   instruction: "Thank you! Please save your results."
